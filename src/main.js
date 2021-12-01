@@ -6,6 +6,7 @@ import { createFilmCardTemplate } from './view/film-card-view.js';
 import { createButtonShowMoreTemplate } from './view/button-show-more-view.js';
 import { createFilmInfoTemplate } from './view/film-info-view.js';
 import { createFilmsTemplate } from './view/films-view.js';
+import './mock/task.js';
 
 const FILM_COUNT = 5;
 const headerElement = document.querySelector('.header');
