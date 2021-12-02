@@ -1,30 +1,4 @@
-const getRandomInteger = (num1, num2) => {
-  const lower = Math.ceil(Math.min(num1, num2));
-  const upper = Math.floor(Math.max(num1, num2));
-
-  return Math.floor(Math.random() * (upper - lower + 1)) + lower;
-};
-
-const getRandomFloat = (num1, num2, amountSymbolsAfterComma) => {
-  const lower = Math.ceil(Math.min(num1, num2));
-  const upper = Math.floor(Math.max(num1, num2));
-
-  return ((Math.random() * (upper - lower + 1)) + lower).toFixed(amountSymbolsAfterComma);
-};
-
-const shuffleArray = (array) => {
-  const result = [];
-
-  while (array.length > 0) {
-    const random = getRandomInteger(0, array.length - 1);
-    const element = array.splice(random, 1)[0];
-    result.push(element);
-  }
-
-  return result;
-};
-
-const sliceArray = (array, length) => array.slice(0, length);
+import { getRandomInteger, getRandomFloat, shuffleArray, sliceArray } from '../utils.js';
 
 const generateFilmName = () => {
   const filmNameArray = [
@@ -42,7 +16,7 @@ const generateFilmPoster = () => {
     'made-for-each-other.png',
     'popeye-meets-sinbad.png',
     'sagebrush-trail.jpg',
-    'the-dance-of-life'
+    'the-dance-of-life.jpg',
   ];
 
   return filmPosterArray[getRandomInteger(0, filmPosterArray.length - 1)];
@@ -134,11 +108,10 @@ export const generateTask = () => ({
   filmName: generateFilmName(),
   filmPoster: generateFilmPoster(),
   description: generateFilmDescription(),
-  comments: comments.slice(0, getRandomInteger(0, 4)),
-  rate: getRandomFloat(0.0, 10.0, 1),
+  comments: comments.slice(0, getRandomInteger(0, 4)).length,
+  rate: getRandomFloat(0, 10, 1),
   dateOfRelease: getRandomInteger(1920, 1980),
   time: generateFilmTime(),
   genre: generateFilmGenre(),
 });
 
-console.log(generateFilmGenre());

@@ -6,9 +6,11 @@ import { createFilmCardTemplate } from './view/film-card-view.js';
 import { createButtonShowMoreTemplate } from './view/button-show-more-view.js';
 import { createFilmInfoTemplate } from './view/film-info-view.js';
 import { createFilmsTemplate } from './view/films-view.js';
-import './mock/task.js';
+import { generateTask } from './mock/task.js';
 
-const FILM_COUNT = 5;
+
+const FILM_COUNT = 15;
+const tasks = Array.from({ length: FILM_COUNT }, generateTask);
 const headerElement = document.querySelector('.header');
 const mainElement = document.querySelector('.main');
 
@@ -22,7 +24,7 @@ const filmsListElement = filmsElement.querySelector('.films-list');
 const filmsListContainerElement = filmsElement.querySelector('.films-list__container');
 
 for (let index = 0; index < FILM_COUNT; index++) {
-  renderTemplate(filmsListContainerElement, renderPosition.BEFOREEND, createFilmCardTemplate());
+  renderTemplate(filmsListContainerElement, renderPosition.BEFOREEND, createFilmCardTemplate(tasks[index]));
 }
 
 renderTemplate(filmsListElement, renderPosition.BEFOREEND, createButtonShowMoreTemplate());
