@@ -4,7 +4,7 @@ import { createNavigationTemplate } from './view/navigation-view.js';
 import { createSortTemplate } from './view/sort-view.js';
 import { createFilmCardTemplate } from './view/film-card-view.js';
 import { createButtonShowMoreTemplate } from './view/button-show-more-view.js';
-import { createFilmInfoTemplate } from './view/film-info-view.js';
+//import { createFilmInfoTemplate } from './view/film-info-view.js';
 import { createFilmsTemplate } from './view/films-view.js';
 import { generateTask } from './mock/task.js';
 
@@ -13,6 +13,7 @@ const FILM_COUNT = 15;
 const tasks = Array.from({ length: FILM_COUNT }, generateTask);
 const headerElement = document.querySelector('.header');
 const mainElement = document.querySelector('.main');
+//const footerElement = document.querySelector('.footer');
 
 renderTemplate(headerElement, renderPosition.BEFOREEND, createProfileTemplate());
 renderTemplate(mainElement, renderPosition.BEFOREEND, createNavigationTemplate());
@@ -28,6 +29,6 @@ for (let index = 0; index < FILM_COUNT; index++) {
 }
 
 renderTemplate(filmsListElement, renderPosition.BEFOREEND, createButtonShowMoreTemplate());
-renderTemplate(mainElement, renderPosition.BEFOREEND, createFilmInfoTemplate());
+//renderTemplate(footerElement, renderPosition.AFTEREND, createFilmInfoTemplate(tasks[0]));
 
 

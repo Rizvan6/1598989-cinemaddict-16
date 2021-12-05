@@ -25,3 +25,6 @@ export const shuffleArray = (array) => {
 };
 
 export const sliceArray = (array, length) => array.slice(0, length);
+
+export const addZeroIfNeeds = (str) => str.length < 2 ? `0${str}` : str;
+
