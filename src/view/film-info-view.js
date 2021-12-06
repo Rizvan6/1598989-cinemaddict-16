@@ -16,8 +16,8 @@ const getFilmCommentElements = (comments) => (
 </li>`).join('')
 );
 
-export const createFilmInfoTemplate = (task) => {
-  const { filmName, filmPoster, filmDescription, filmRate, filmReleaseDateFull, filmTime, filmGenresFull, filmDirector, filmWriters, filmActors, filmCountry, filmAgeRating, filmComments, isWatchlist, isWatched, isFavorite } = task;
+export const createFilmInfoTemplate = (film) => {
+  const { filmName, filmPoster, filmDescription, filmRate, filmReleaseDateFull, filmTime, filmGenresFull, filmDirector, filmWriters, filmActors, filmCountry, filmAgeRating, filmComments, isWatchlist, isWatched, isFavorite } = film;
 
   const correctGenres = filmGenresFull.length > 1
     ? 'Genres'

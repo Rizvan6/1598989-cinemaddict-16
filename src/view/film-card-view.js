@@ -10,8 +10,8 @@ const limitDescription = (desc) => {
   return sliced;
 };
 
-export const createFilmCardTemplate = (task) => {
-  const { filmName, filmPoster, filmDescription, filmComments, filmRate, filmReleaseDate, filmTime, filmGenresLimit, isWatchlist, isWatched, isFavorite } = task;
+export const createFilmCardTemplate = (film) => {
+  const { filmName, filmPoster, filmDescription, filmComments, filmRate, filmReleaseDate, filmTime, filmGenresLimit, isWatchlist, isWatched, isFavorite } = film;
 
   const watchListClassName = isWatchlist
     ? 'film-card__controls-item--active'
