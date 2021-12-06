@@ -7,49 +7,48 @@ const randomDay = getRandomInteger(0, 31);
 const randomMonth = getRandomInteger(0, 12);
 const randomFilmTimeHour = getRandomInteger(0, 2);
 const randomFilmTimeMinutes = getRandomInteger(15, 59);
+const randomAgeRating = getRandomInteger(0, 18);
+const randomFilmCommentsLength = getRandomInteger(0, 4);
+const randomFilmRate = getRandomFloat(0, 10, 1);
+const randomFilmReleaseDate = getRandomInteger(1920, 1970);
+const randomFilmReleaseDateFull = dayjs(`${randomFilmReleaseDate}-${addZeroIfNeeds(randomMonth)}-${addZeroIfNeeds(randomDay)}`).format('DD MMMM YYYY');
 const comments = [
   {
     id: 1,
     author: 'Tim Macoveev',
     message: 'Booooooooooring',
-    emoji: 'smile.png',
+    emoji: 'smile',
     date: dayjs.between('2018-01-01 23:59', '2021-12-01 23:59').format('YYYY-MM-DD HH:mm'),
-    alt: 'smile',
   },
   {
     id: 2,
     author: 'John Doe',
     message: 'Interesting setting and a good cast',
-    emoji: 'sleeping.png',
+    emoji: 'sleeping',
     date: dayjs.between('2018-01-01 23:59', '2021-12-01 23:59').format('YYYY-MM-DD HH:mm'),
-    alt: 'sleeping',
   },
   {
     id: 3,
     author: 'John Doe',
     message: 'Almost two hours? Seriously?',
-    emoji: 'angry.png',
+    emoji: 'angry',
     date: dayjs.between('2018-01-01 23:59', '2021-12-01 23:59').format('YYYY-MM-DD HH:mm'),
-    alt: 'angry',
   },
   {
     id: 4,
     author: 'Tim Macoveev',
     message: 'Very very old. Meh',
-    emoji: 'puke.png',
+    emoji: 'puke',
     date: dayjs.between('2018-01-01 23:59', '2021-12-01 23:59').format('YYYY-MM-DD HH:mm'),
-    alt: 'puke',
   },
   {
     id: 5,
     author: 'John Doe',
     message: 'Cooooooool',
-    emoji: 'smile.png',
+    emoji: 'smile',
     date: dayjs.between('2018-01-01 23:59', '2021-12-01 23:59').format('YYYY-MM-DD HH:mm'),
-    alt: 'smile',
   }
 ];
-
 const filmGenres = [
   ['Drama', 'Film-Noir', 'Mystery'],
   ['Mystery'],
@@ -167,27 +166,27 @@ const generateFilmCountry = () => {
 };
 
 export const generateTask = () => {
-  const releaseDate = getRandomInteger(1920, 1970);
-  const releaseDateFull = dayjs(`${releaseDate}-${addZeroIfNeeds(randomMonth)}-${addZeroIfNeeds(randomDay)}`).format('DD MMMM YYYY');
   const filmGenresFull = filmGenres[getRandomInteger(0, filmGenres.length - 1)];
   const filmGenresLimit = filmGenresFull.slice(0, 1).join('');
 
   return {
     filmName: generateFilmName(),
     filmPoster: generateFilmPoster(),
-    description: generateFilmDescription(),
-    comments: comments.slice(0, getRandomInteger(0, 4)),
-    rate: getRandomFloat(0, 10, 1),
-    releaseDate,
-    releaseDateFull,
-    time: generateFilmTime(),
+    filmDescription: generateFilmDescription(),
+    filmComments: comments.slice(0, randomFilmCommentsLength),
+    filmRate: randomFilmRate,
+    filmReleaseDate: randomFilmReleaseDate,
+    filmReleaseDateFull: randomFilmReleaseDateFull,
+    filmTime: generateFilmTime(),
     filmGenresFull,
     filmGenresLimit,
-    director: generateFilmDirector(),
-    writers: generateFilmWriters(),
-    actors: generateFilmActors(),
-    country: generateFilmCountry(),
-    ageRating: getRandomInteger(0, 18),
+    filmDirector: generateFilmDirector(),
+    filmWriters: generateFilmWriters(),
+    filmActors: generateFilmActors(),
+    filmCountry: generateFilmCountry(),
+    filmAgeRating: randomAgeRating,
+    isWatchlist: Boolean(getRandomInteger(0, 1)),
+    isWatched: Boolean(getRandomInteger(0, 1)),
+    isFavorite: Boolean(getRandomInteger(0, 1)),
   };
 };
-
