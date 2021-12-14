@@ -1,10 +1,10 @@
-import { renderPosition, renderElement } from './render.js';
+import { renderPosition, render } from './render.js';
 import ProofileView from './view/profile-view.js';
 import NavigationView from './view/navigation-view.js';
 import SortView from './view/sort-view.js';
 import FilmCardView from './view/film-card-view.js';
 import ButtonShowMoreView from './view/button-show-more-view.js';
-import FilmInfoView from './view/film-info-view.js';
+//import FilmInfoView from './view/film-info-view.js';
 import FilmsView from './view/films-view.js';
 import FilmsListContainerView from './view/films-list-view';
 import randomFooterStatisticsView from './view/footer-statistics-view.js';
@@ -18,19 +18,19 @@ const mainElement = document.querySelector('.main');
 const footerElement = document.querySelector('.footer');
 const navigation = generateNavigation(films);
 
-renderElement(headerElement, renderPosition.BEFOREEND, new ProofileView().element);
-renderElement(mainElement, renderPosition.BEFOREEND, new NavigationView(navigation).element);
-renderElement(mainElement, renderPosition.BEFOREEND, new SortView().element);
+render(headerElement, renderPosition.BEFOREEND, new ProofileView().element);
+render(mainElement, renderPosition.BEFOREEND, new NavigationView(navigation).element);
+render(mainElement, renderPosition.BEFOREEND, new SortView().element);
 
 const filmsComponent = new FilmsView();
-renderElement(mainElement, renderPosition.BEFOREEND, filmsComponent.element);
-renderElement(filmsComponent.element, renderPosition.BEFOREEND, new FilmsListContainerView().element);
+render(mainElement, renderPosition.BEFOREEND, filmsComponent.element);
+render(filmsComponent.element, renderPosition.BEFOREEND, new FilmsListContainerView().element);
 
 const filmsListElement = document.querySelector('.films-list');
 const filmsListContainerElement = filmsListElement.querySelector('.films-list__container');
 
 for (let index = 0; index < Math.min(films.length, FILM_COUNT_PER_STEP); index++) {
-  renderElement(filmsListContainerElement, renderPosition.BEFOREEND, new FilmCardView(films[index]).element);
+  render(filmsListContainerElement, renderPosition.BEFOREEND, new FilmCardView(films[index]).element);
 }
 
 if (films.length > FILM_COUNT_PER_STEP) {
@@ -38,14 +38,14 @@ if (films.length > FILM_COUNT_PER_STEP) {
 
   const buttonShowMoreComponent = new ButtonShowMoreView();
 
-  renderElement(filmsListElement, renderPosition.BEFOREEND, buttonShowMoreComponent.element);
+  render(filmsListElement, renderPosition.BEFOREEND, buttonShowMoreComponent.element);
 
   buttonShowMoreComponent.element.addEventListener('click', (evt) => {
     evt.preventDefault();
 
     films
       .slice(renderedFilmCount, renderedFilmCount + FILM_COUNT_PER_STEP)
-      .forEach((film) => renderElement(filmsListContainerElement, renderPosition.BEFOREEND, new FilmCardView(film).element));
+      .forEach((film) => render(filmsListContainerElement, renderPosition.BEFOREEND, new FilmCardView(film).element));
 
     renderedFilmCount += FILM_COUNT_PER_STEP;
 
@@ -56,5 +56,5 @@ if (films.length > FILM_COUNT_PER_STEP) {
   });
 }
 
-renderElement(footerElement, renderPosition.BEFOREEND, new randomFooterStatisticsView().element);
-renderElement(footerElement, renderPosition.AFTEREND, new FilmInfoView(films[0]).element);
+render(footerElement, renderPosition.BEFOREEND, new randomFooterStatisticsView().element);
+//render(footerElement, renderPosition.AFTEREND, new FilmInfoView(films[0]).element);
