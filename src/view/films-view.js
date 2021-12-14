@@ -17,7 +17,7 @@ export default class FilmsView {
     return createFilmsTemplate();
   }
 
-  elementRemove() {
+  removeElement() {
     this.#element = null;
   }
 }

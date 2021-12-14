@@ -165,7 +165,7 @@ const generateFilmCountry = () => {
   return filmCountryArray[getRandomInteger(0, filmCountryArray.length - 1)];
 };
 
-export const generateTask = () => {
+export const generateFilm = () => {
   const filmGenresFull = filmGenres[getRandomInteger(0, filmGenres.length - 1)];
   const filmGenresLimit = filmGenresFull.slice(0, 1).join('');
 
