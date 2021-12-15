@@ -3,15 +3,6 @@ import dayjs from 'dayjs';
 import dayjsRandom from 'dayjs-random';
 dayjs.extend(dayjsRandom);
 
-const randomDay = getRandomInteger(0, 31);
-const randomMonth = getRandomInteger(0, 12);
-const randomFilmTimeHour = getRandomInteger(0, 2);
-const randomFilmTimeMinutes = getRandomInteger(15, 59);
-const randomAgeRating = getRandomInteger(0, 18);
-const randomFilmCommentsLength = getRandomInteger(0, 4);
-const randomFilmRate = getRandomFloat(0, 10, 1);
-const randomFilmReleaseDate = getRandomInteger(1920, 1970);
-const randomFilmReleaseDateFull = dayjs(`${randomFilmReleaseDate}-${addZeroIfNeeds(randomMonth)}-${addZeroIfNeeds(randomDay)}`).format('DD MMMM YYYY');
 const comments = [
   {
     id: 1,
@@ -103,6 +94,8 @@ const generateFilmDescription = () => {
 };
 
 const generateFilmTime = () => {
+  const randomFilmTimeHour = getRandomInteger(0, 2);
+  const randomFilmTimeMinutes = getRandomInteger(15, 59);
   const time = {
     hour: randomFilmTimeHour,
     minutes: randomFilmTimeMinutes,
@@ -168,6 +161,13 @@ const generateFilmCountry = () => {
 export const generateFilm = () => {
   const filmGenresFull = filmGenres[getRandomInteger(0, filmGenres.length - 1)];
   const filmGenresLimit = filmGenresFull.slice(0, 1).join('');
+  const randomFilmReleaseDate = getRandomInteger(1920, 1970);
+  const randomDay = getRandomInteger(0, 31);
+  const randomMonth = getRandomInteger(0, 12);
+  const randomFilmReleaseDateFull = dayjs(`${randomFilmReleaseDate}-${addZeroIfNeeds(randomMonth)}-${addZeroIfNeeds(randomDay)}`).format('DD MMMM YYYY');
+  const randomAgeRating = getRandomInteger(0, 18);
+  const randomFilmCommentsLength = getRandomInteger(0, 4);
+  const randomFilmRate = getRandomFloat(0, 10, 1);
 
   return {
     filmName: generateFilmName(),
