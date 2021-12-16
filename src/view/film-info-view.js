@@ -1,3 +1,5 @@
+import { createElement } from '../render.js';
+
 const getFilmGenreElements = (genres) => genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
 
 const getFilmCommentElements = (comments) => (
@@ -16,7 +18,7 @@ const getFilmCommentElements = (comments) => (
 </li>`).join('')
 );
 
-export const createFilmInfoTemplate = (film) => {
+const createFilmInfoTemplate = (film) => {
   const { filmName, filmPoster, filmDescription, filmRate, filmReleaseDateFull, filmTime, filmGenresFull, filmDirector, filmWriters, filmActors, filmCountry, filmAgeRating, filmComments, isWatchlist, isWatched, isFavorite } = film;
 
   const correctGenres = filmGenresFull.length > 1
@@ -143,3 +145,28 @@ export const createFilmInfoTemplate = (film) => {
   </form>
 </section>`;
 };
+
+export default class FilmInfoView {
+  #element = null;
+  #film = null;
+
+  constructor(film) {
+    this.#film = film;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createFilmInfoTemplate(this.#film);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
