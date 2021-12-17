@@ -1,8 +1,8 @@
 import { createElement } from '../render.js';
 
-const createFilmsListTemplate = () => '<section class="films-list"></section>';
+const createFilmsListTitleTemplate = () => '<h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>';
 
-export default class FilmsListView {
+export default class FilmsListTitleView {
   #element = null;
 
   get element() {
@@ -14,10 +14,11 @@ export default class FilmsListView {
   }
 
   get template() {
-    return createFilmsListTemplate();
+    return createFilmsListTitleTemplate();
   }
 
   removeElement() {
     this.#element = null;
   }
 }
+

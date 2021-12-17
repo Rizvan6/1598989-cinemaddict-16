@@ -5,7 +5,7 @@ export const renderPosition = {
   AFTEREND: 'afterend',
 };
 
-export const render = (container, place, element) => {
+export const render = (container, element, place = renderPosition.BEFOREEND) => {
   switch (place) {
     case renderPosition.BEFOREBEGIN:
       return container.before(element);
@@ -22,5 +22,5 @@ export const createElement = (template) => {
   const newElement = document.createElement('div');
   newElement.innerHTML = template;
 
-  return newElement.firstChild;
+  return newElement.firstElementChild;
 };
