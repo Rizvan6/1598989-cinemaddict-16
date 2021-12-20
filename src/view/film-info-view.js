@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const getFilmGenreElements = (genres) => genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
 
@@ -146,27 +146,15 @@ const createFilmInfoTemplate = (film) => {
 </section>`;
 };
 
-export default class FilmInfoView {
-  #element = null;
+export default class FilmInfoView extends AbstractView {
   #film = null;
 
   constructor(film) {
+    super();
     this.#film = film;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
   }
 
   get template() {
     return createFilmInfoTemplate(this.#film);
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

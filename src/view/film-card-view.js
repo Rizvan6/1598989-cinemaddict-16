@@ -1,5 +1,5 @@
 import { REQUIRED_AMOUNT_OF_SYMBOLS } from '../const.js';
-import { createElement } from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const limitDescription = (desc) => {
   let sliced = desc.slice(0, REQUIRED_AMOUNT_OF_SYMBOLS);
@@ -47,28 +47,15 @@ const createFilmCardTemplate = (film) => {
 </article>`;
 };
 
-export default class FilmCardView {
-  #element = null;
+export default class FilmCardView extends AbstractView {
   #film = null;
 
   constructor(film) {
+    super();
     this.#film = film;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
   }
 
   get template() {
     return createFilmCardTemplate(this.#film);
   }
-
-  removeElement() {
-    this.#element = null;
-  }
-
 }
