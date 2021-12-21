@@ -157,4 +157,13 @@ export default class FilmInfoView extends AbstractView {
   get template() {
     return createFilmInfoTemplate(this.#film);
   }
+
+  setInfoClickHandler = (callback) => {
+    this._callback.infoClick = callback;
+    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#infoClickHandler);
+  }
+
+  #infoClickHandler = () => {
+    this._callback.infoClick();
+  }
 }

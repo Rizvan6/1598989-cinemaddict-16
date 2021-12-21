@@ -1,4 +1,4 @@
-import { REQUIRED_AMOUNT_OF_SYMBOLS } from '../const.js';
+import { REQUIRED_AMOUNT_OF_SYMBOLS } from '../utils/const.js';
 import AbstractView from './abstract-view.js';
 
 const limitDescription = (desc) => {
@@ -57,5 +57,14 @@ export default class FilmCardView extends AbstractView {
 
   get template() {
     return createFilmCardTemplate(this.#film);
+  }
+
+  setCardClickHandler = (callback) => {
+    this._callback.cardClick = callback;
+    this.element.querySelector('.film-card__link').addEventListener('click', this.#cardClickHandler);
+  }
+
+  #cardClickHandler = () => {
+    this._callback.cardClick();
   }
 }
