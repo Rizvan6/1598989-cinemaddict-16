@@ -1,4 +1,4 @@
-import { render } from './render.js';
+import { render, addOrRemoveChild, remove } from './utils/render.js';
 import ProfileView from './view/profile-view.js';
 import NavigationView from './view/navigation-view.js';
 import SortView from './view/sort-view.js';
@@ -13,7 +13,7 @@ import FilmsListContainerView from './view/films-list-container';
 import randomFooterStatisticsView from './view/footer-statistics-view.js';
 import { generateFilm } from './mock/film.js';
 import { generateNavigation } from './mock/navigation.js';
-import { FILM_COUNT, FILM_COUNT_PER_STEP } from './const.js';
+import { FILM_COUNT, FILM_COUNT_PER_STEP } from './utils/const.js';
 
 const films = Array.from({ length: FILM_COUNT }, generateFilm);
 const headerElement = document.querySelector('.header');
@@ -28,13 +28,13 @@ const renderFilm = (film) => {
   const filmInfoComponent = new FilmInfoView(film);
 
   const switchOnPopup = () => {
-    bodyElement.appendChild(filmInfoComponent.element);
+    addOrRemoveChild(bodyElement, filmInfoComponent);
 
     document.addEventListener('keydown', onEscKeyDown);
   };
 
   const switchOffPopup = () => {
-    bodyElement.removeChild(filmInfoComponent.element);
+    addOrRemoveChild(bodyElement, filmInfoComponent);
 
     document.removeEventListener('keydown', onEscKeyDown);
   };
@@ -47,18 +47,18 @@ const renderFilm = (film) => {
     }
   }
 
-  filmComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
+  filmComponent.setCardClickHandler(() => {
     switchOnPopup();
     bodyElement.classList.add('hide-overflow');
   });
 
-  filmInfoComponent.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+  filmInfoComponent.setInfoClickHandler(() => {
     switchOffPopup();
     bodyElement.classList.remove('hide-overflow');
   });
 
 
-  render(filmsListContainerComponent.element, filmComponent.element);
+  render(filmsListContainerComponent, filmComponent);
 };
 
 const renderFilmsList = (FilmsListContainer, filmItems) => {
@@ -67,15 +67,15 @@ const renderFilmsList = (FilmsListContainer, filmItems) => {
   const buttonShowMoreComponent = new ButtonShowMoreView();
 
   if (filmItems.length === 0) {
-    render(filmsListComponent.element, new NoFilmsView().element);
+    render(filmsListComponent, new NoFilmsView());
   } else {
-    render(FilmsListContainer, new SortView().element);
-    render(filmsListComponent.element, new FilmsListTitleView().element);
+    render(FilmsListContainer, new SortView());
+    render(filmsListComponent, new FilmsListTitleView());
   }
 
-  render(FilmsListContainer, filmsComponent.element);
-  render(filmsComponent.element, filmsListComponent.element);
-  render(filmsListComponent.element, filmsListContainerComponent.element);
+  render(FilmsListContainer, filmsComponent);
+  render(filmsComponent, filmsListComponent);
+  render(filmsListComponent, filmsListContainerComponent);
 
   filmItems
     .slice(0, Math.min(filmItems.length, FILM_COUNT_PER_STEP))
@@ -84,11 +84,9 @@ const renderFilmsList = (FilmsListContainer, filmItems) => {
   if (filmItems.length > FILM_COUNT_PER_STEP) {
     let renderedFilmCount = FILM_COUNT_PER_STEP;
 
-    render(filmsListComponent.element, buttonShowMoreComponent.element);
+    render(filmsListComponent, buttonShowMoreComponent);
 
-    buttonShowMoreComponent.element.addEventListener('click', (evt) => {
-      evt.preventDefault();
-
+    buttonShowMoreComponent.setButtonShowMoreClickHandler(() => {
       filmItems
         .slice(renderedFilmCount, renderedFilmCount + FILM_COUNT_PER_STEP)
         .forEach((filmCard) => renderFilm(filmCard));
@@ -96,15 +94,14 @@ const renderFilmsList = (FilmsListContainer, filmItems) => {
       renderedFilmCount += FILM_COUNT_PER_STEP;
 
       if (filmItems.length < renderedFilmCount) {
-        buttonShowMoreComponent.element.remove();
-        buttonShowMoreComponent.removeElement();
+        remove(buttonShowMoreComponent);
       }
     });
   }
 };
 
 
-render(headerElement, new ProfileView().element);
-render(mainElement, new NavigationView(navigation).element);
+render(headerElement, new ProfileView());
+render(mainElement, new NavigationView(navigation));
 renderFilmsList(mainElement, films);
-render(footerElement, new randomFooterStatisticsView().element);
+render(footerElement, new randomFooterStatisticsView());
