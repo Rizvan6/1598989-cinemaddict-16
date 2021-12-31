@@ -32,13 +32,13 @@ export const createElement = (template) => {
 
 export const addOrRemoveChild = (parent, element) => {
   if (element === null) {
-    throw new Error('Can\'t work with unexisting elemnent');
+    throw new Error('Can\'t work with unexisting element!');
   }
 
   const child = element instanceof AbstractView ? element.element : element;
 
   if (parent === null) {
-    throw new Error('Parent element doesn\'t exist');
+    throw new Error('Parent element doesn\'t exist!');
   }
 
   if (!parent.contains(child)) {
@@ -54,9 +54,28 @@ export const remove = (component) => {
   }
 
   if (!(component instanceof AbstractView)) {
-    throw new Error('Can remove only components');
+    throw new Error('Can remove only components!');
   }
 
   component.element.remove();
   component.removeElement();
 };
+
+
+export const replace = (newElement, oldElement) => {
+  if (newElement === null || oldElement === null) {
+    throw Error('Can\'t replace unexisting elements!');
+  }
+
+  const newChild = newElement instanceof AbstractView ? newElement.element : newElement;
+  const oldChild = oldElement instanceof AbstractView ? oldElement.element : oldElement;
+
+  const parent = oldChild.parentElement;
+
+  if (parent === null) {
+    throw Error('Parent element doesn\'t exist!');
+  }
+
+  parent.replaceChild(newChild, oldChild);
+};
+

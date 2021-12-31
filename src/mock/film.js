@@ -1,4 +1,5 @@
 import { getRandomInteger, getRandomFloat, shuffleArray, sliceArray, addZeroIfNeeds } from '../utils/common.js';
+import { nanoid } from 'nanoid';
 import dayjs from 'dayjs';
 import dayjsRandom from 'dayjs-random';
 dayjs.extend(dayjsRandom);
@@ -170,6 +171,7 @@ export const generateFilm = () => {
   const randomFilmRate = getRandomFloat(0, 10, 1);
 
   return {
+    id: nanoid(),
     filmName: generateFilmName(),
     filmPoster: generateFilmPoster(),
     filmDescription: generateFilmDescription(),
