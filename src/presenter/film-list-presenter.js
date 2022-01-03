@@ -8,6 +8,7 @@ import ButtonShowMoreView from '../view/button-show-more-view.js';
 import { render, remove } from '../utils/render.js';
 import { FILM_COUNT_PER_STEP } from '../utils/const.js';
 import FilmPresenter from './film-presenter.js';
+import { updateItem } from '../utils/common.js';
 
 export default class FilmListPresenter {
   #filmListContainer = null;
@@ -35,12 +36,21 @@ export default class FilmListPresenter {
     this.#renderFilmsList();
   }
 
+  #handleModeChange = () => {
+    this.#filmPresenter.forEach((presenter) => presenter.resetView());
+  }
+
+  #handleTaskChange = (updatedTask) => {
+    this.#filmListFilms = updateItem(this.#filmListFilms, updatedTask);
+    this.#filmPresenter.get(updatedTask.id).init(updatedTask);
+  }
+
   #renderSort = () => {
     render(this.#filmListContainer, this.#sortComponent);
   }
 
   #renderFilm = (film) => {
-    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent);
+    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent, this.#handleTaskChange, this.#handleModeChange);
     filmPresenter.init(film);
     this.#filmPresenter.set(film.id, filmPresenter);
   }
