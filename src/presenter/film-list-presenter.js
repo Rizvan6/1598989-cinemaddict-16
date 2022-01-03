@@ -6,7 +6,7 @@ import NoFilmsView from '../view/no-films-view.js';
 import FilmsListContainerView from '../view/films-list-container';
 import ButtonShowMoreView from '../view/button-show-more-view.js';
 import { render, remove } from '../utils/render.js';
-import { FILM_COUNT_PER_STEP } from '../utils/const.js';
+import { FILM_COUNT_PER_STEP, SortType } from '../utils/const.js';
 import FilmPresenter from './film-presenter.js';
 import { updateItem } from '../utils/common.js';
 
@@ -24,6 +24,8 @@ export default class FilmListPresenter {
   #filmListFilms = [];
   #renderedFilmCount = FILM_COUNT_PER_STEP;
   #filmPresenter = new Map();
+  #currentSortType = SortType.DEFAULT;
+  #sourcedFilmListFilms = [];
 
 
   constructor(filmListContainer) {
@@ -33,6 +35,8 @@ export default class FilmListPresenter {
   init = (filmListFilms) => {
     this.#filmListFilms = [...filmListFilms];
 
+    this.#sourcedFilmListFilms = [...filmListFilms];
+
     this.#renderFilmsList();
   }
 
@@ -40,17 +44,44 @@ export default class FilmListPresenter {
     this.#filmPresenter.forEach((presenter) => presenter.resetView());
   }
 
-  #handleTaskChange = (updatedTask) => {
-    this.#filmListFilms = updateItem(this.#filmListFilms, updatedTask);
-    this.#filmPresenter.get(updatedTask.id).init(updatedTask);
+  #handleFilmChange = (updatedFilm) => {
+    this.#filmListFilms = updateItem(this.#filmListFilms, updatedFilm);
+    this.#sourcedFilmListFilms = updateItem(this.#sourcedFilmListFilms, updatedFilm);
+    this.#filmPresenter.get(updatedFilm.id).init(updatedFilm);
+  }
+
+  #sortFilms = (sortType) => {
+    switch (sortType) {
+      case SortType.SORT_BY_DATE:
+        this.#filmListFilms.sort(this.#filmListFilms.filmReleaseDate);
+        break;
+      case SortType.SORT_BY_RATING:
+        this.#filmListFilms.sort(this.#filmListFilms.filmRate);
+        break;
+      default:
+        this.#filmListFilms = [...this.#sourcedFilmListFilms];
+    }
+
+    this.#currentSortType = sortType;
+  }
+
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+
+    this.#sortFilms(sortType);
+    this.#clearFilmList();
+    this.#renderFilmsList();
   }
 
   #renderSort = () => {
     render(this.#filmListContainer, this.#sortComponent);
+    this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange());
   }
 
   #renderFilm = (film) => {
-    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent, this.#handleTaskChange, this.#handleModeChange);
+    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent, this.#handleFilmChange, this.#handleModeChange);
     filmPresenter.init(film);
     this.#filmPresenter.set(film.id, filmPresenter);
   }
