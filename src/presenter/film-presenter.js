@@ -39,6 +39,7 @@ export default class FilmPresenter {
     this.#filmCardComponent.setFilmCardWatchlistClickHandler(this.#handleWatchlistClick);
     this.#filmCardComponent.setFilmCardWatchedClickHandler(this.#handleWatchedClick);
     this.#filmCardComponent.setFilmCardFavoriteClickHandler(this.#handleFavoriteClick);
+
     this.#filmInfoComponent.setFilmInfoWatchlistClickHandler(this.#handleWatchlistClick);
     this.#filmInfoComponent.setFilmInfoWatchedClickHandler(this.#handleWatchedClick);
     this.#filmInfoComponent.setFilmInfoFavoriteClickHandler(this.#handleFavoriteClick);
@@ -54,11 +55,11 @@ export default class FilmPresenter {
 
     if (this.#mode === Mode.EDITING) {
       replace(this.#filmInfoComponent, prevFilmInfoComponent);
+      replace(this.#filmCardComponent, prevFilmCardComponent);
     }
 
     remove(prevFilmCardComponent);
     remove(prevFilmInfoComponent);
-
   }
 
   destroy = () => {

@@ -79,3 +79,28 @@ export const replace = (newElement, oldElement) => {
   parent.replaceChild(newChild, oldChild);
 };
 
+
+export const compareDates = (dateA, dateB) => {
+  if (dateA.filmReleaseDate > dateB.filmReleaseDate) {
+    return -1;
+  }
+
+  if (dateA.filmReleaseDate < dateB.filmReleaseDate) {
+    return 1;
+  }
+
+  return 0;
+};
+
+export const compareRates = (dateA, dateB) => {
+  if (dateA.filmRate > dateB.filmRate) {
+    return -1;
+  }
+
+  if (dateA.filmRate < dateB.filmRate) {
+    return 1;
+  }
+
+  return 0;
+};
+
